@@ -6,7 +6,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -18,7 +17,7 @@ public class IntervalRules {
     List<ProtocolRule> byProtocol;
     Duration def;
 
-    public static DeviceIdRule byDeviceIdRule(Duration interval, Set<String> deviceId) {
+    public static DeviceIdRule byDeviceIdRule(Duration interval, List<String> deviceId) {
         return new DeviceIdRule(interval, deviceId);
     }
 
@@ -63,7 +62,7 @@ public class IntervalRules {
     static class DeviceIdRule implements Predicate<Deviceish> {
 
         Duration interval;
-        Set<String> devices;
+        List<String> devices;
 
         @Override
         public boolean test(Deviceish device) {

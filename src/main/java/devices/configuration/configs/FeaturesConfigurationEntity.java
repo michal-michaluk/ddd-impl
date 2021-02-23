@@ -17,6 +17,5 @@ class FeaturesConfigurationEntity {
     private String name;
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
-
     private IntervalRules configuration;
 }

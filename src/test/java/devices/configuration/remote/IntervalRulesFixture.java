@@ -12,11 +12,11 @@ public class IntervalRulesFixture {
                 List.of(
                         IntervalRules.byDeviceIdRule(
                                 Duration.ofSeconds(600),
-                                Set.of("EVB-P4562137", "ALF-9571445", "CS_7155_CGC100", "EVB-P9287312", "ALF-2844179")
+                                List.of("EVB-P4562137", "ALF-9571445", "CS_7155_CGC100", "EVB-P9287312", "ALF-2844179")
                         ),
                         IntervalRules.byDeviceIdRule(
                                 Duration.ofSeconds(2700),
-                                Set.of("t53_8264_019", "EVB-P15079256", "EVB-P0984003", "EVB-P1515640", "EVB-P1515526")
+                                List.of("t53_8264_019", "EVB-P15079256", "EVB-P0984003", "EVB-P1515640", "EVB-P1515526")
                         )),
                 List.of(
                         IntervalRules.byModelRule(

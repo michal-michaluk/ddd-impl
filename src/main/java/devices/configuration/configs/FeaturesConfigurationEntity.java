@@ -1,5 +1,6 @@
 package devices.configuration.configs;
 
+import devices.configuration.remote.IntervalRules;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
@@ -16,5 +17,6 @@ class FeaturesConfigurationEntity {
     private String name;
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
-    private String configuration;
+
+    private IntervalRules configuration;
 }

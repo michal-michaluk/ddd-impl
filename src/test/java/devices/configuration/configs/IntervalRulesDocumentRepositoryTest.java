@@ -12,10 +12,10 @@ import static devices.configuration.TestTransaction.transactional;
 
 @IntegrationTest
 @Transactional
-class IntervalRulesRepositoryTest {
+class IntervalRulesDocumentRepositoryTest {
 
-    //@Autowired
-    //private FeaturesConfigurationRepository configs;
+    @Autowired
+    private FeaturesConfigurationRepository configs;
 
     @Autowired
     private IntervalRulesDocumentRepository repository;
@@ -27,18 +27,17 @@ class IntervalRulesRepositoryTest {
         var entity = entity(name, IntervalRulesFixture.currentRules());
 
         // when
-        //transactional(() -> configs.save(entity));
+        transactional(() -> configs.save(entity));
         var result = transactional(() -> repository.get());
 
         // then
-        JsonAssert.assertThat(result).isExactlyLike(IntervalRulesFixture.currentRules());
+        JsonAssert.assertThat(result).hasFieldsLike(IntervalRulesFixture.currentRules());
     }
 
-    private Object entity(String name, IntervalRules value) {
-        //FeaturesConfigurationEntity entity = new FeaturesConfigurationEntity();
-        //entity.setConfiguration(value);
-        //entity.setName(name);
-        //return entity;
-        return null;
+    private FeaturesConfigurationEntity entity(String name, IntervalRules value) {
+        FeaturesConfigurationEntity entity = new FeaturesConfigurationEntity();
+        entity.setConfiguration(value);
+        entity.setName(name);
+        return entity;
     }
 }

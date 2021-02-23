@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class IntervalRulesDocumentRepository implements IntervalRulesRepository {
 
-    //private final FeaturesConfigurationRepository repository;
+    private final FeaturesConfigurationRepository repository;
 
     @Override
     public IntervalRules get() {
-        return null;
+        return repository.findByName("IntervalRules")
+                .map(FeaturesConfigurationEntity::getConfiguration)
+                .orElse(IntervalRules.defaultRules());
     }
 }

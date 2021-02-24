@@ -26,7 +26,7 @@ public class Device {
         this.settings = this.settings.merge(settings);
     }
 
-    private Violations getViolations() {
+    private Violations checkViolations() {
         return Violations.builder()
                 .operatorNotAssigned(ownership == null || ownership.getOperator() == null)
                 .providerNotAssigned(ownership == null || ownership.getProvider() == null)
@@ -36,8 +36,20 @@ public class Device {
                 .build();
     }
 
-    private Visibility getVisibility() {
-        boolean usable = getViolations().isValid() && settings.isPublicAccess();
-        return Visibility.basedOn(usable, settings.isShowOnMap());
+    public DeviceSnapshot toSnapshot() {
+        Violations violations = checkViolations();
+        Visibility visibility = Visibility.basedOn(
+                violations.isValid() && settings.isPublicAccess(),
+                settings.isShowOnMap()
+        );
+        return new DeviceSnapshot(
+                deviceId,
+                ownership,
+                location,
+                openingHours,
+                settings,
+                violations,
+                visibility
+        );
     }
 }

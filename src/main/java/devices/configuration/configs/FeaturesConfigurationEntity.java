@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "features_configuration")
+@Table(name = "configuration")
 class FeaturesConfigurationEntity {
     @Id
     private String name;

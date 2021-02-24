@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 @Value
 public class IntervalRules {
-
     List<DeviceIdRule> byIds;
     List<ModelRule> byModel;
     List<ProtocolRule> byProtocol;

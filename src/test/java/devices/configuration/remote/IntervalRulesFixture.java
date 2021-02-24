@@ -7,6 +7,21 @@ import java.util.regex.Pattern;
 
 public class IntervalRulesFixture {
 
+    public static String brokenRules() {
+        return "{\n" +
+                "  \"byIds\": [],\n" +
+                "  \"byModel\": [\n" +
+                "    {\n" +
+                "      \"interval\": 60.000000000,\n" +
+                "      \"vendor\": \"any\",\n" +
+                "      \"model\": \"notvalid regex [\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"byProtocol\": [],\n" +
+                "  \"def\": 1800.000000000\n" +
+                "}";
+    }
+
     public static IntervalRules currentRules() {
         return new IntervalRules(
                 List.of(

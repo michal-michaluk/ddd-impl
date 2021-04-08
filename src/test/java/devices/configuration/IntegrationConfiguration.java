@@ -23,5 +23,9 @@ class IntegrationConfiguration {
         System.setProperty("spring.datasource.url", postgreSQLContainer.getJdbcUrl());
         System.setProperty("spring.datasource.username", postgreSQLContainer.getUsername());
         System.setProperty("spring.datasource.password", postgreSQLContainer.getPassword());
+
+        System.out.println("spring.datasource.url: " + postgreSQLContainer.getJdbcUrl());
+        System.out.println("spring.datasource.username: " + postgreSQLContainer.getUsername());
+        System.out.println("spring.datasource.password: " + postgreSQLContainer.getPassword());
     }
 }

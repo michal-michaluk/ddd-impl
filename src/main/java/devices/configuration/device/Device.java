@@ -1,29 +1,50 @@
 package devices.configuration.device;
 
+import devices.configuration.DomainEvent;
+import devices.configuration.device.events.LocationUpdated;
+import devices.configuration.device.events.OpeningHoursUpdated;
+import devices.configuration.device.events.OwnershipUpdated;
+import devices.configuration.device.events.SettingsUpdated;
 import lombok.AllArgsConstructor;
+
+import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 public class Device {
-    private final String deviceId;
+    final String deviceId;
+    final List<DomainEvent> events;
     private Ownership ownership;
     private OpeningHours openingHours;
     private Location location;
     private Settings settings;
 
     public void assignTo(Ownership ownership) {
-        this.ownership = ownership;
+        if (!Objects.equals(this.ownership, ownership)) {
+            this.ownership = ownership;
+            events.add(new OwnershipUpdated(deviceId, ownership));
+        }
     }
 
     public void updateOpeningHours(OpeningHours openingHours) {
-        this.openingHours = openingHours;
+        if (!Objects.equals(this.openingHours, openingHours)) {
+            this.openingHours = openingHours;
+            events.add(new OpeningHoursUpdated(deviceId, openingHours));
+        }
     }
 
     public void updateLocation(Location location) {
-        this.location = location;
+        if (!Objects.equals(this.location, location)) {
+            this.location = location;
+            events.add(new LocationUpdated(deviceId, location));
+        }
     }
 
     public void updateSettings(Settings settings) {
-        this.settings = this.settings.merge(settings);
+        if (!Objects.equals(this.settings, settings)) {
+            this.settings = this.settings.merge(settings);
+            events.add(new SettingsUpdated(deviceId, settings));
+        }
     }
 
     public Violations getViolations() {

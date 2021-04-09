@@ -38,4 +38,14 @@ public class IntervalRulesFixture {
                 Duration.ofSeconds(1800)
         );
     }
+
+    public static String brokenRules() {
+        return "{\n" +
+                "  \"byModel\": [\n" +
+                "    {\n" +
+                "      \"model\": \"[\"" +
+                "    }\n" +
+                "  ]" +
+                "}";
+    }
 }

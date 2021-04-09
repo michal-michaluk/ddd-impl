@@ -41,9 +41,10 @@ public class Device {
     }
 
     public void updateSettings(Settings settings) {
-        if (!Objects.equals(this.settings, settings)) {
-            this.settings = this.settings.merge(settings);
-            events.add(new SettingsUpdated(deviceId, settings));
+        Settings merged = this.settings.merge(settings);
+        if (!Objects.equals(this.settings, merged)) {
+            this.settings = merged;
+            events.add(new SettingsUpdated(deviceId, this.settings));
         }
     }
 
@@ -62,5 +63,23 @@ public class Device {
                 getViolations().isValid(),
                 settings.isPublicAccess(),
                 settings.isShowOnMap());
+    }
+
+    public DeviceSnapshot toSnapshot() {
+        Violations violations = getViolations();
+        Visibility visibility = Visibility.of(
+                violations.isValid(),
+                settings.isPublicAccess(),
+                settings.isShowOnMap()
+        );
+        return new DeviceSnapshot(
+                deviceId,
+                ownership,
+                location,
+                openingHours,
+                settings,
+                violations,
+                visibility
+        );
     }
 }

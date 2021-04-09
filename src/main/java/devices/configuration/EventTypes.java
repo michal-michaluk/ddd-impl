@@ -19,8 +19,7 @@ import java.util.Map;
         @JsonSubTypes.Type(value = OwnershipUpdated.class, name = "OwnershipUpdated_v1"),
         @JsonSubTypes.Type(value = OpeningHoursUpdated.class, name = "OpeningHoursUpdated_v1"),
         @JsonSubTypes.Type(value = LocationUpdated.class, name = "LocationUpdated_v1"),
-        @JsonSubTypes.Type(value = SettingsUpdated.class, name = "SettingsUpdated_v1"),
-        @JsonSubTypes.Type(value = DeviceSnapshotV1.class, name = "DeviceSnapshot_v1")
+        @JsonSubTypes.Type(value = SettingsUpdated.class, name = "SettingsUpdated_v1")
 })
 public class EventTypes {
 

@@ -2,17 +2,15 @@ package devices.configuration;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import devices.configuration.device.events.LocationUpdated;
-import devices.configuration.device.events.OpeningHoursUpdated;
-import devices.configuration.device.events.OwnershipUpdated;
-import devices.configuration.device.events.SettingsUpdated;
+import devices.configuration.device.events.*;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = OwnershipUpdated.class, name = "OwnershipUpdated"),
-        @JsonSubTypes.Type(value = OpeningHoursUpdated.class, name = "OpeningHoursUpdated"),
-        @JsonSubTypes.Type(value = LocationUpdated.class, name = "LocationUpdated"),
-        @JsonSubTypes.Type(value = SettingsUpdated.class, name = "SettingsUpdated"),
+        @JsonSubTypes.Type(value = LegacyEvents.OwnershipUpdatedV1.class, name = "OwnershipUpdated_v1"),
+        @JsonSubTypes.Type(value = OwnershipUpdated.class, name = "OwnershipUpdated_v2"),
+        @JsonSubTypes.Type(value = OpeningHoursUpdated.class, name = "OpeningHoursUpdated_v1"),
+        @JsonSubTypes.Type(value = LocationUpdated.class, name = "LocationUpdated_v1"),
+        @JsonSubTypes.Type(value = SettingsUpdated.class, name = "SettingsUpdated_v1"),
 })
 public interface DomainEvent {
 }

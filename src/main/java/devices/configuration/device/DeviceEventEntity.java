@@ -1,6 +1,7 @@
 package devices.configuration.device;
 
 import devices.configuration.DomainEvent;
+import devices.configuration.EventTypes;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -20,15 +21,18 @@ class DeviceEventEntity {
     @Id
     private UUID id;
     private String deviceId;
+    private String type;
     private Instant time;
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     private DomainEvent event;
 
     public DeviceEventEntity(String deviceId, DomainEvent event) {
+        EventTypes.Type type = EventTypes.of(event);
         this.id = UUID.randomUUID();
-        this.time = Instant.now();
         this.deviceId = deviceId;
+        this.type = type.getType();
+        this.time = Instant.now();
         this.event = event;
     }
 }

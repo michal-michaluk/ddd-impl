@@ -24,6 +24,23 @@ class DeviceRepositoryTest {
         //given
         Device device = DeviceFixture.notConfigured(deviceId);
         device.assignTo(new Ownership("operator", "provider"));
+        device.updateSettings(Settings.builder()
+                .autoStart(true)
+                .remoteControl(true)
+                .billing(true)
+                .reimbursement(true)
+                .showOnMap(true)
+                .publicAccess(true)
+                .build());
+        device.updateOpeningHours(OpeningHours.openAt(
+                OpeningHours.OpeningTime.open24h(),
+                OpeningHours.OpeningTime.open24h(),
+                OpeningHours.OpeningTime.open24h(),
+                OpeningHours.OpeningTime.open24h(),
+                OpeningHours.OpeningTime.open24h(),
+                OpeningHours.OpeningTime.opened(8, 17),
+                OpeningHours.OpeningTime.closed()
+        ));
 
         // when
         transactional(() -> repository.save(device));

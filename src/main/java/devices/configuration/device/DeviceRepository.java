@@ -23,6 +23,7 @@ public class DeviceRepository {
     Optional<Device> get(String deviceId) {
         List<DomainEvent> events = repository.findByDeviceId(deviceId).stream()
                 .map(DeviceEventEntity::getEvent)
+                .map(LegacyDomainEvent::normalise)
                 .collect(Collectors.toList());
         if (events.isEmpty()) {
             return Optional.empty();

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import static devices.configuration.JsonAssert.json;
 import static devices.configuration.TestTransaction.transactional;
 
 @IntegrationTest
@@ -36,7 +37,7 @@ class IntervalRulesDocumentRepositoryTest {
 
     private FeaturesConfigurationEntity entity(String name, IntervalRules value) {
         FeaturesConfigurationEntity entity = new FeaturesConfigurationEntity();
-        entity.setConfiguration(value);
+        entity.setConfiguration(json(value));
         entity.setName(name);
         return entity;
     }

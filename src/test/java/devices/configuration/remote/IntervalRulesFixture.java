@@ -2,7 +2,6 @@ package devices.configuration.remote;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 public class IntervalRulesFixture {
@@ -38,4 +37,20 @@ public class IntervalRulesFixture {
                 Duration.ofSeconds(1800)
         );
     }
+
+    public static String brokenRules() {
+        return "{\n" +
+                "  \"byIds\": [],\n" +
+                "  \"byModel\": [\n" +
+                "    {\n" +
+                "      \"interval\": 60.000000000,\n" +
+                "      \"vendor\": \"any\",\n" +
+                "      \"model\": \"notvalid regex [\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"byProtocol\": [],\n" +
+                "  \"def\": 1800.000000000\n" +
+                "}";
+    }
+
 }

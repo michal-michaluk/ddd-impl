@@ -1,11 +1,14 @@
 package devices.configuration.configs;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import devices.configuration.remote.IntervalRules;
 import devices.configuration.remote.IntervalRulesRepository;
+import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Function;
 
 @Service
 @AllArgsConstructor
@@ -30,13 +33,16 @@ public class IntervalRulesDocumentRepository implements IntervalRulesRepository 
                 .getConfiguration();
     }
 
-    @SneakyThrows
     private IntervalRules parse(String json) {
-        return mapper.readValue(json, IntervalRules.class);
+        return Try.of(() -> mapper.readValue(json, IntervalRules.class))
+                .getOrElseThrow(((Function<Throwable, RuntimeException>) RuntimeException::new));
     }
 
-    @SneakyThrows
     private String json(IntervalRules object) {
-        return mapper.writeValueAsString(object);
+        try {
+            return mapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

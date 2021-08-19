@@ -25,3 +25,7 @@ server:
   shutdown: graceful
   error:
     include-message: always
+
+fancy:
+  prop: hello
+  dur: 12s

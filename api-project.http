@@ -1,0 +1,25 @@
+
+### lista work item-ów przeznaczona dla zalogowanego instalatora:
+PUT {{sales-service}}/workitems
+Accept: application/json
+Authorization: Bearer {{jwt}}
+
+[
+  {
+    "workItemId": 62830,
+    "customer": {
+      "operator": "polski-prund",
+      "provider": "orzeszek-charging"
+    },
+    "workItem": {
+      "type": „INSTALLATION”,
+      "address": "Orzechowa 105, 50-540 Wrocław"
+      "options": [
+        "Ładowarka Chargestorm 45kW",
+        "bez dodatkowego kabla"
+      ]
+    }
+  }
+]
+
+###

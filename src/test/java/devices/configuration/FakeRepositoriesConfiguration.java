@@ -4,6 +4,7 @@ import devices.configuration.configs.FeaturesConfigurationRepository;
 import devices.configuration.remote.IntervalRules;
 import devices.configuration.remote.IntervalRulesFixture;
 import devices.configuration.remote.IntervalRulesRepository;
+import lombok.SneakyThrows;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +15,7 @@ public class FakeRepositoriesConfiguration {
 
     @Bean
     @Primary
-    public IntervalRulesRepository fakeIntervalRulesRepository() {
+    public FakeIntervalRulesRepository fakeIntervalRulesRepository() {
         return new FakeIntervalRulesRepository();
     }
 
@@ -28,13 +29,20 @@ public class FakeRepositoriesConfiguration {
 
         private IntervalRules rules = IntervalRulesFixture.currentRules();
 
-        public void setRules(IntervalRules rules) {
+        public FakeIntervalRulesRepository withRules(IntervalRules rules) {
             this.rules = rules;
+            return this;
         }
 
         @Override
         public IntervalRules get() {
             return rules;
+        }
+
+        @Override
+        @SneakyThrows
+        public String save(IntervalRules object) {
+            return JsonConfiguration.OBJECT_MAPPER.writeValueAsString(object);
         }
     }
 }

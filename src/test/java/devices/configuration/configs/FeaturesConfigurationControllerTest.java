@@ -3,6 +3,7 @@ package devices.configuration.configs;
 import devices.configuration.JsonAssert;
 import devices.configuration.remote.IntervalRules;
 import devices.configuration.remote.IntervalRulesFixture;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Optional;
 
 import static devices.configuration.JsonAssert.json;
+import static devices.configuration.JsonConfiguration.OBJECT_MAPPER;
 import static devices.configuration.configs.FeaturesConfigurationFixture.entity;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -51,7 +53,7 @@ class FeaturesConfigurationControllerTest {
                 .getContentAsString();
 
         // then
-        JsonAssert.assertThat(result)
+        JsonAssert.assertThat(parse(result))
                 .isExactlyLike(IntervalRulesFixture.currentRules());
     }
 
@@ -126,6 +128,11 @@ class FeaturesConfigurationControllerTest {
                 .content(IntervalRulesFixture.brokenRules())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @SneakyThrows
+    private IntervalRules parse(String result) {
+        return OBJECT_MAPPER.readValue(result, IntervalRules.class);
     }
 }
 

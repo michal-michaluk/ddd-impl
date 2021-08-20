@@ -38,6 +38,24 @@ public class IntervalRulesFixture {
         );
     }
 
+    public static IntervalRules shortRules() {
+        return new IntervalRules(
+                List.of(
+                        IntervalRules.byDeviceIdRule(
+                                Duration.ofSeconds(2700),
+                                List.of("t53_8264_019")
+                        )),
+                List.of(
+                        IntervalRules.byModelRule(
+                                Duration.ofSeconds(60),
+                                "Alfen BV",
+                                Pattern.compile("NG920-5250[6-9]")
+                        )),
+                List.of(IntervalRules.byProtocolRule(Duration.ofSeconds(600), Protocols.IoT20)),
+                Duration.ofSeconds(1800)
+        );
+    }
+
     public static String brokenRules() {
         return "{\n" +
                 "  \"byIds\": [],\n" +
@@ -52,5 +70,4 @@ public class IntervalRulesFixture {
                 "  \"def\": 1800.000000000\n" +
                 "}";
     }
-
 }

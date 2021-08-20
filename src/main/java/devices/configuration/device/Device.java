@@ -10,6 +10,10 @@ public class Device {
     private OpeningHours openingHours;
     private Settings settings;
 
+    public String getDeviceId() {
+        return deviceId;
+    }
+
     public void assignTo(Ownership ownership) {
         this.ownership = ownership;
     }

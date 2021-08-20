@@ -1,0 +1,9 @@
+description: Read any not existing configuration
+request:
+  method: GET
+  url: /configs/NotExistingKey
+  headers:
+    Accepts: application/json
+
+response:
+  status: 404

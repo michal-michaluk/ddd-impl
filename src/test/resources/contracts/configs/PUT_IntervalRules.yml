@@ -1,0 +1,61 @@
+description: Save new configuration of Interval Rules
+request:
+  method: PUT
+  url: /configs/IntervalRules
+  headers:
+    Content-Type: application/json
+  body:
+    {
+      "byIds": [
+        {
+          "interval": 2700,
+          "devices": [
+              "t53_8264_019",
+          ]
+        }
+      ],
+      "byModel": [
+        {
+          "interval": 60,
+          "vendor": "Alfen BV",
+          "model": "NG920-5250[6-9]"
+        }
+      ],
+      "byProtocol": [
+        {
+          "interval": 600,
+          "protocol": "IoT20"
+        }
+      ],
+      "def": 1800
+    }
+
+response:
+  status: 200
+  headers:
+    Content-Type: application/json
+  body:
+    {
+      "byIds": [
+        {
+          "interval": 2700,
+          "devices": [
+              "t53_8264_019",
+          ]
+        }
+      ],
+      "byModel": [
+        {
+          "interval": 60,
+          "vendor": "Alfen BV",
+          "model": "NG920-5250[6-9]"
+        }
+      ],
+      "byProtocol": [
+        {
+          "interval": 600,
+          "protocol": "IoT20"
+        }
+      ],
+      "def": 1800
+    }

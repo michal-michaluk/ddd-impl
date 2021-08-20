@@ -1,6 +1,7 @@
 package devices.configuration.configs;
 
 import devices.configuration.FakeRepositoriesConfiguration;
+import devices.configuration.remote.IntervalRulesFixture;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import io.restassured.module.mockmvc.config.MockMvcConfig;
 import io.restassured.module.mockmvc.config.RestAssuredMockMvcConfig;
@@ -30,6 +31,6 @@ public class ContractTestingBase {
     }
 
     private void givenProviderState() {
-        // TODO setup proper state for GET
+        repository.withRules(IntervalRulesFixture.shortRules());
     }
 }

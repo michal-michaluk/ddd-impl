@@ -7,8 +7,12 @@ public class Visibility {
     boolean roamingEnabled;
     ForCustomer forCustomer;
 
-    public static Visibility basedOn(boolean usable, boolean showOnMap) {
-        return new Visibility(usable, ForCustomer.calculateForCustomer(usable, showOnMap));
+    public static Visibility basedOn(Violations violations, Settings settings) {
+        boolean usable = violations.isValid() && settings.isPublicAccess();
+        return new Visibility(
+                usable,
+                ForCustomer.calculateForCustomer(usable, settings.isShowOnMap())
+        );
     }
 
     public enum ForCustomer {

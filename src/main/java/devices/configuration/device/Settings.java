@@ -28,6 +28,19 @@ public class Settings {
                 .build();
     }
 
+    public static Settings orDefault(Settings settings) {
+        if (settings == null) {
+            return defaultSettings();
+        }
+        return settings;
+    }
+
+    void ensureSettingCorrect() {
+        if (isShowOnMap() && !isPublicAccess()) {
+            throw new IllegalArgumentException(String.format("Settings with incorrect ShowOnMap = %s and PublicAccess = %s", isShowOnMap(), isPublicAccess()));
+        }
+    }
+
     public boolean isAutoStart() {
         return autoStart != null && autoStart;
     }

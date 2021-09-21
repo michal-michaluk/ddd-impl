@@ -1,8 +1,7 @@
 package devices.configuration.device;
 
-import lombok.AllArgsConstructor;
+import java.util.Objects;
 
-@AllArgsConstructor
 public class Device {
     private final String deviceId;
     private Ownership ownership;
@@ -10,8 +9,17 @@ public class Device {
     private OpeningHours openingHours;
     private Settings settings;
 
+    public Device(String deviceId, Ownership ownership, Location location, OpeningHours openingHours, Settings settings) {
+        Objects.requireNonNull(deviceId, "deviceId is null");
+        this.deviceId = deviceId;
+        this.ownership = Ownership.orUnowned(ownership);
+        this.location = location;
+        this.openingHours = OpeningHours.alwaysOpenOrGiven(openingHours);
+        this.settings = Settings.orDefault(settings);
+    }
+
     public void assignTo(Ownership ownership) {
-        this.ownership = ownership;
+        this.ownership = Ownership.orUnowned(ownership);
     }
 
     public void updateLocation(Location location) {
@@ -23,13 +31,15 @@ public class Device {
     }
 
     public void updateSettings(Settings settings) {
-        this.settings = this.settings.merge(settings);
+        Settings merged = this.settings.merge(settings);
+        merged.ensureSettingCorrect();
+        this.settings = merged;
     }
 
     private Violations getViolations() {
         return Violations.builder()
-                .operatorNotAssigned(ownership == null || ownership.getOperator() == null)
-                .providerNotAssigned(ownership == null || ownership.getProvider() == null)
+                .operatorNotAssigned(ownership.notAssignedToOperator())
+                .providerNotAssigned(ownership.notAssignedToProvider())
                 .locationMissing(location == null)
                 .showOnMapButMissingLocation(settings.isShowOnMap() && location == null)
                 .showOnMapButNoPublicAccess(settings.isShowOnMap() && !settings.isPublicAccess())
@@ -37,7 +47,6 @@ public class Device {
     }
 
     private Visibility getVisibility() {
-        boolean usable = getViolations().isValid() && settings.isPublicAccess();
-        return Visibility.basedOn(usable, settings.isShowOnMap());
+        return Visibility.basedOn(getViolations(), settings);
     }
 }

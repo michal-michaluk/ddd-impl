@@ -4,9 +4,9 @@ import devices.configuration.device.Device;
 import devices.configuration.device.DeviceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.awt.print.Pageable;
 import java.util.Optional;
 
 @Component
@@ -23,13 +23,13 @@ public class DeviceDocumentRepository implements DeviceRepository {
 
     @Override
     public Optional<Device> findByDeviceId(String deviceId) {
-        return repository.findByDeviceId(deviceId)
+        return repository.findById(deviceId)
                 .map(DeviceDocumentEntity::getDevice);
     }
 
     @Override
     public void save(Device device) {
-        repository.findByDeviceId(device.getDeviceId())
-                .map(DeviceDocumentEntity::getDevice);
+        repository.findById(device.getDeviceId())
+                .ifPresent(e -> e.setDevice(device));
     }
 }

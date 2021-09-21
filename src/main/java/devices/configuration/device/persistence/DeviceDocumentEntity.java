@@ -3,6 +3,7 @@ package devices.configuration.device.persistence;
 import devices.configuration.device.Device;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ class DeviceDocumentEntity {
     @Version
     private long version;
 
+    @Setter
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     private Device device;

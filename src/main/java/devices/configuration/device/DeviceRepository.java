@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -21,10 +20,7 @@ public class DeviceRepository {
     private final DeviceEventRepository repository;
 
     Optional<Device> get(String deviceId) {
-        List<DomainEvent> events = repository.findByDeviceId(deviceId).stream()
-                .map(DeviceEventEntity::getEvent)
-                .map(LegacyDomainEvent::normalise)
-                .collect(Collectors.toList());
+        List<DomainEvent> events = repository.findAllDomainEvents(deviceId);
         if (events.isEmpty()) {
             return Optional.empty();
         }

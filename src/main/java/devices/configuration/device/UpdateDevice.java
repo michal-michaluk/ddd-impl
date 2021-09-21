@@ -1,12 +1,11 @@
 package devices.configuration.device;
 
+import lombok.Value;
+
 import javax.validation.Valid;
-import java.util.function.Consumer;
 
-import static java.util.Optional.ofNullable;
-
+@Value
 public class UpdateDevice {
-
     @Valid
     Location location;
     @Valid
@@ -16,23 +15,18 @@ public class UpdateDevice {
     @Valid
     Ownership ownership;
 
-    public UpdateDevice onLocationUpdate(Consumer<Location> consumer) {
-        ofNullable(location).ifPresent(consumer);
-        return this;
-    }
-
-    public UpdateDevice onOpeningUpdate(Consumer<OpeningHours> consumer) {
-        ofNullable(openingHours).ifPresent(consumer);
-        return this;
-    }
-
-    public UpdateDevice onOwnershipUpdate(Consumer<Ownership> consumer) {
-        ofNullable(ownership).ifPresent(consumer);
-        return this;
-    }
-
-    public UpdateDevice onSettingsUpdate(Consumer<Settings> consumer) {
-        ofNullable(settings).ifPresent(consumer);
-        return this;
+    public void apply(Device device) {
+        if (location != null) {
+            device.updateLocation(location);
+        }
+        if (openingHours != null) {
+            device.updateOpeningHours(openingHours);
+        }
+        if (settings != null) {
+            device.updateSettings(settings);
+        }
+        if (ownership != null) {
+            device.assignTo(ownership);
+        }
     }
 }

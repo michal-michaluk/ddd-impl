@@ -36,7 +36,6 @@ public class DevicesController {
                 .map(Device::toSnapshot);
     }
 
-    @Transactional
     @PatchMapping(path = "/devices/{deviceId}",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)

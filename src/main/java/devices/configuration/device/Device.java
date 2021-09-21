@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class Device {
-    private final String deviceId;
+    final String deviceId;
     private Ownership ownership;
     private Location location;
     private OpeningHours openingHours;

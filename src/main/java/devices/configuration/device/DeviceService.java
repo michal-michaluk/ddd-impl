@@ -16,11 +16,7 @@ public class DeviceService {
     public Optional<DeviceSnapshot> update(String deviceId, UpdateDevice update) {
         return repository.findByDeviceId(deviceId)
                 .map(device -> {
-                    update
-                            .onLocationUpdate(device::updateLocation)
-                            .onOpeningUpdate(device::updateOpeningHours)
-                            .onSettingsUpdate(device::updateSettings)
-                            .onOwnershipUpdate(device::assignTo);
+                    update.apply(device);
                     repository.save(device);
                     return device.toSnapshot();
                 });
